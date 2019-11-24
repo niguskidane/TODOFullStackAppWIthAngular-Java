@@ -1,3 +1,4 @@
+import { HttpIntercepterBasicAuthService } from './service/http/http-intercepter-basic-auth.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -11,7 +12,7 @@ import { ListTodosComponent } from './list-todos/list-todos.component';
 import { MenuComponent } from './menu/menu.component';
 import { FooterComponent } from './footer/footer.component';
 import { LogoutComponent } from './logout/logout.component';
-import { HttpClientModule } from '@Angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@Angular/common/http';
 import { TodoComponent } from './todo/todo.component';
 
 
@@ -33,7 +34,9 @@ import { TodoComponent } from './todo/todo.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass:HttpIntercepterBasicAuthService, multi:true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

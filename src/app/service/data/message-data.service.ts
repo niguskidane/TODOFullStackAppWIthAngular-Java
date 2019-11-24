@@ -1,4 +1,4 @@
-import {HttpClient} from '@Angular/common/http';
+import {HttpClient, HttpHeaders} from '@Angular/common/http';
 import { Injectable } from '@angular/core';
 
 export class HelloWorldBean{
@@ -15,7 +15,14 @@ export class MessageDataService {
   ) { }
 
   excuteHelloWorldBeanMessageService(){
-    return this.http.get<HelloWorldBean>('http://localhost:8080/hello');
+    let basicAuthHeaderString=this.createBasicAuthenticationHttpHeader();
+
+    let header=new HttpHeaders(
+      {
+        Authorization: basicAuthHeaderString
+      }
+    );
+    return this.http.get<HelloWorldBean>('http://localhost:8080/hello',{headers:header});
     //console.log('Hello World Bean Service is Excuted!');
   }
 
@@ -25,4 +32,12 @@ export class MessageDataService {
   return this.http.get<HelloWorldBean>(`http://localhost:8080/hello/${name}`);
   //console.log('Hello World Bean Service is Excuted!');
 }
+
+createBasicAuthenticationHttpHeader(){
+  let username='niguskidane';
+  let password='dummy';
+  let basicAuthHeaderString='Basic '+window.btoa(username+ ':' + password);
+  return basicAuthHeaderString;
+}
+
 }
