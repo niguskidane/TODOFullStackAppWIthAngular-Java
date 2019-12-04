@@ -41,7 +41,7 @@ message:String;
     ) { }
 
   ngOnInit() {
-    this.todoDateService.retriveAllTodos('NigusKidae').subscribe(
+    this.todoDateService.retriveAllTodos('NigusKidane').subscribe(
       response =>{
              console.log(response);
              this.todos = response;

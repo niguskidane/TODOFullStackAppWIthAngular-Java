@@ -1,3 +1,4 @@
+import { API_URL } from './../../app.constants';
 import {HttpClient, HttpHeaders} from '@Angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -15,29 +16,31 @@ export class MessageDataService {
   ) { }
 
   excuteHelloWorldBeanMessageService(){
-    let basicAuthHeaderString=this.createBasicAuthenticationHttpHeader();
+    // let basicAuthHeaderString=this.createBasicAuthenticationHttpHeader();
 
-    let header=new HttpHeaders(
-      {
-        Authorization: basicAuthHeaderString
-      }
+    // let header=new HttpHeaders(
+    //   {
+    //     Authorization: basicAuthHeaderString
+    //   }
+    // );
+
+    return this.http.get<HelloWorldBean>(`${API_URL}/hello`,//{headers:header}
     );
-    return this.http.get<HelloWorldBean>('http://localhost:8080/hello',{headers:header});
     //console.log('Hello World Bean Service is Excuted!');
   }
 
  // http://localhost:8080/hello/Nigus%20Kidane
 
  excuteHelloWorldBeanMessageServiceWithPathVarible(name){
-  return this.http.get<HelloWorldBean>(`http://localhost:8080/hello/${name}`);
+  return this.http.get<HelloWorldBean>(`${API_URL}/hello/${name}`);
   //console.log('Hello World Bean Service is Excuted!');
 }
 
-createBasicAuthenticationHttpHeader(){
-  let username='niguskidane';
-  let password='dummy';
-  let basicAuthHeaderString='Basic '+window.btoa(username+ ':' + password);
-  return basicAuthHeaderString;
-}
+// createBasicAuthenticationHttpHeader(){
+//   let username='niguskidane';
+//   let password='dummy';
+//   let basicAuthHeaderString='Basic '+window.btoa(username+ ':' + password);
+//   return basicAuthHeaderString;
+// }
 
 }
