@@ -12,8 +12,8 @@ export class LoginComponent implements OnInit {
 
   username='nigus'
   password=''
-  errorMessage='Invalid Credentials'
-  invalidlogin=false
+  errorMessage = 'Invalid Credentials, Please Enter the Right Username and Password!'
+  invalidLogin = false
 
 //Router
 //Angular.giveMeRauter
@@ -32,9 +32,9 @@ export class LoginComponent implements OnInit {
     //if(this.username==="nigus" && this.password==='dummy'){
       if(this.hardcodedAuthenticationService.authenticate(this.username,this.password)){
       this.router.navigate(['welcome',this.username])
-      this.invalidlogin=false;
+      this.invalidLogin=false;
     }else{
-      this.invalidlogin=true;
+      this.invalidLogin=true;
     }
   }
 
@@ -46,11 +46,28 @@ export class LoginComponent implements OnInit {
         data=>{
           console.log(data);
           this.router.navigate(['welcome',this.username])
-          this.invalidlogin=false;
+          this.invalidLogin=false;
         },
         error=>{
-          console.log(error());
-          this.invalidlogin=true;
+          console.log(error);
+          this.invalidLogin=true;
+        }
+      )
+  }
+
+  handleJWTAuthLogin(){
+    //console.log(this.username)
+    //if(this.username==="nigus" && this.password==='dummy'){
+      this.basicAuthenticationService.excuteJWTAuthenticationService(this.username,this.password)
+      .subscribe(
+        data=>{
+          console.log(data);
+          this.router.navigate(['welcome',this.username])
+          this.invalidLogin=false;
+        },
+        error=>{
+          console.log(error);
+          this.invalidLogin=true;
         }
       )
   }
